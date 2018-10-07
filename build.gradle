@@ -1,0 +1,166 @@
+allprojects {
+    group 'com.wxmlabs'
+    version '0.1'
+
+    ext {
+        // "-Dwxmlabs.releases" to archive release version
+        isReleaseVersion = System.properties["wxmlabs.releases"] != null
+    }
+    version = isReleaseVersion ? version : "$version-SNAPSHOT"
+}
+
+subprojects {
+    apply plugin: 'groovy'
+    apply plugin: 'jacoco'
+    apply plugin: 'maven'
+    apply plugin: 'signing'
+
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        spockVersion = '1.1-groovy-2.4'
+    }
+
+    sourceCompatibility = 1.8
+
+    dependencies {
+        compile("org.slf4j:slf4j-api:1.7.25")
+        // for development environment logging
+        runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
+
+        // spock framework for unit test
+        testCompile("org.spockframework:spock-core:${spockVersion}") {
+            exclude module: 'groovy-all'
+        }
+        testCompile("org.codehaus.groovy:groovy:2.4.12")
+    }
+
+    // 解决文件编码问题
+    tasks.withType(AbstractCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    // 解决文件编码问题
+    tasks.withType(Javadoc) {
+        options.encoding = 'UTF-8'
+    }
+
+    if (javaHome) {
+        def javaExecutablesPath = new File(javaHome, 'bin')
+        def javaExecutables = [:].withDefault { execName ->
+            if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+                execName = "${execName}.exe"
+            }
+            def executable = new File(javaExecutablesPath, execName.toString())
+            assert executable.exists(): "There is no ${execName} executable in ${javaExecutablesPath}"
+            executable
+        }
+        tasks.withType(JavaCompile) {
+            options.fork = true
+            options.forkOptions.javaHome = file(javaHome)
+        }
+        tasks.withType(Javadoc) {
+            executable = javaExecutables.javadoc
+        }
+        tasks.withType(Test) {
+            executable = javaExecutables.java
+        }
+        tasks.withType(JavaExec) {
+            executable = javaExecutables.java
+        }
+    }
+
+    jar {
+        manifest {
+            attributes(
+                    'Created-By': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})".toString(),
+                    'Implementation-Title': project.name,
+                    'Implementation-Version': project.version,
+                    'Implementation-Vendor': 'WXM Labs'
+            )
+        }
+    }
+
+    javadoc {
+        title = "$project.name $project.version"
+    }
+
+    task javadocJar(type: Jar) {
+        classifier = 'javadoc'
+        from javadoc
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled true
+        }
+    }
+
+    check.dependsOn jacocoTestReport
+
+    signing {
+        required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+                    if (project.hasProperty('ossrhUserName') && project.hasProperty('ossrhPassword')) {
+                        authentication(userName: ossrhUserName, password: ossrhPassword)
+                    }
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+                    if (project.hasProperty('ossrhUserName') && project.hasProperty('ossrhPassword')) {
+                        authentication(userName: ossrhUserName, password: ossrhPassword)
+                    }
+                }
+
+                pom.project {
+                    name 'SpringCA'
+                    packaging 'jar'
+                    description 'SpringCA'
+                    url 'https://github.com/springca/springca'
+
+                    scm {
+                        connection 'scm:git:https://github.com/springca/springca.git'
+                        developerConnection 'scm:git:ssh:git@github.com:springca/springca.git'
+                        url 'https://github.com/springca/springca/'
+                    }
+
+                    licenses {
+                        license {
+                            name 'Apache License 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'springca'
+                            name 'springca'
+                            email 'wxmlabs@vselect.com'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

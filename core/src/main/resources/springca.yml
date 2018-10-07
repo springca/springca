@@ -1,0 +1,13 @@
+springca:
+    keystore:
+        type: "JKS"
+        params:
+            file: ${user.home}/.springca/issuer/default.jks
+            password: "springca.wxmlabs.com"
+    issuer:
+        key:
+            alias: 'RSA_Issuer'
+
+logging:
+    level:
+        com.wxmlabs: DEBUG

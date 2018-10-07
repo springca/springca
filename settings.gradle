@@ -1,0 +1,9 @@
+rootProject.name = 'springca'
+
+def subProjects = ['api', 'core']
+
+include subProjects as String[]
+
+subProjects.each { name ->
+    project(":$name").name = "${rootProject.name}-$name"
+}
