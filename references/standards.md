@@ -70,6 +70,10 @@ RFC5280 Internet X.509 Public Key Infrastructure Certificate and Certificate Rev
 
 RFC5967 The application/pkcs10 Media Type
 
+## IANA
+
+https://www.iana.org/assignments/media-types
+
 ## 参考网站
 
 全国标准信息公共服务平台 http://www.std.gov.cn/

@@ -28,7 +28,15 @@ import java.security.NoSuchProviderException;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Collections;
+import java.util.Map;
 
+import static com.wxmlabs.springca.server.MediaType.APPLICATION_OCTET_STREAM;
+import static com.wxmlabs.springca.server.MediaType.APPLICATION_PKCS10;
+import static com.wxmlabs.springca.server.MediaType.APPLICATION_PKCS12;
+import static com.wxmlabs.springca.server.MediaType.APPLICATION_PKIX_CERT;
+import static org.springframework.http.MediaType.APPLICATION_PDF;
+import static org.springframework.http.MediaType.IMAGE_PNG;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
@@ -40,39 +48,76 @@ public class SpringCAController {
     private CAService caService;
 
     @RequestMapping(value = "/enroll", method = POST)
-    ResponseEntity<ByteArrayResource> enroll(@RequestParam String csr) throws CertificateEncodingException {
+    ResponseEntity<ByteArrayResource> enroll(@RequestParam String csr) {
         String filename;
         byte[] data;
 
-        X509Certificate x509 = caService.enrollCert(csr);
-        filename = x509.getSerialNumber().toString(16) + ".cer";
-        data = x509.getEncoded();
-
-        return export(filename, data);
+        try {
+            X509Certificate x509 = caService.enrollCert(csr);
+            filename = x509.getSerialNumber().toString(16) + ".cer";
+            data = x509.getEncoded();
+            return export(filename, data);
+        } catch (CertificateEncodingException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
     @RequestMapping(value = "/issue", method = POST)
-    ResponseEntity<ByteArrayResource> issue(@RequestParam String commonName) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, OperatorCreationException, InvalidAlgorithmParameterException, PKCSException, NoSuchProviderException {
+    ResponseEntity issue(@RequestParam String commonName) {
         log.debug("issue for " + commonName);
+        if (commonName == null)
+            return ResponseEntity.badRequest().body("commonName can not be null");
+
         String filename;
         byte[] data;
 
-        KeyStore pkcs12 = caService.issueCert(commonName);
-        String alias = pkcs12.aliases().nextElement();
-        X509Certificate x509 = (X509Certificate) pkcs12.getCertificate(alias);
-        filename = x509.getSerialNumber().toString(16) + ".p12";
+        try {
+            KeyStore pkcs12 = caService.issueCert(commonName);
+            String alias = pkcs12.aliases().nextElement();
+            X509Certificate x509 = (X509Certificate) pkcs12.getCertificate(alias);
+            filename = x509.getSerialNumber().toString(16) + ".pfx";
 
-        ByteArrayOutputStream p12Out = new ByteArrayOutputStream();
-        pkcs12.store(p12Out, "springca.wxmlabs.com".toCharArray());
-        data = p12Out.toByteArray();
-
-        return export(filename, data);
+            ByteArrayOutputStream p12Out = new ByteArrayOutputStream();
+            pkcs12.store(p12Out, "springca.wxmlabs.com".toCharArray());
+            data = p12Out.toByteArray();
+            return export(filename, data);
+        } catch (CertificateException | KeyStoreException | IOException | NoSuchAlgorithmException | OperatorCreationException | PKCSException | NoSuchProviderException | InvalidAlgorithmParameterException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
     private ResponseEntity<ByteArrayResource> export(String filename, byte[] data) {
         if (data == null) {
             return null;
         }
+
+        String suffix = filename.substring(filename.lastIndexOf('.'));
+        MediaType contentType;
+        Map<String, String> parameters = Collections.singletonMap("name", filename);
+        switch (suffix) {
+            case ".p10":
+            case ".csr": // 非标准后缀
+                contentType = new MediaType(APPLICATION_PKCS10, parameters);
+                break;
+            case ".p12":
+            case ".pfx":
+                contentType = new MediaType(APPLICATION_PKCS12, parameters);
+                break;
+            case ".cer":
+            case ".crt": // 非标准后缀
+                contentType = new MediaType(APPLICATION_PKIX_CERT, parameters);
+                break;
+            case ".pdf":
+                contentType = new MediaType(APPLICATION_PDF, parameters);
+                break;
+            case ".png":
+                contentType = new MediaType(IMAGE_PNG, parameters);
+                break;
+            default:
+                contentType = APPLICATION_OCTET_STREAM;
+                break;
+        }
+
         HttpHeaders headers = new HttpHeaders();
         // RFC 6266 - Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
         // @link https://tools.ietf.org/html/rfc6266
@@ -96,7 +141,7 @@ public class SpringCAController {
             .ok()
             .headers(headers)
             .contentLength(data.length)
-            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .contentType(contentType)
             .body(new ByteArrayResource(data));
     }
 }
