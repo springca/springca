@@ -18,6 +18,7 @@ bootJar {
 dependencies {
     compile project(":springca-api")
     compile "org.bouncycastle:bcpkix-jdk15on:1.60"
+    compile "commons-io:commons-io:2.6"
     compile "joda-time:joda-time:2.10"
 
     compile("org.springframework.boot:spring-boot-starter-web")
