@@ -10,7 +10,6 @@ GB/T 19714-2005 《信息技术 安全技术 公钥基础设施 证书管理协�
 
 GB/T 20518-2018 《信息安全技术 公钥基础设施 数字证书格式》
  *Information security technology—Public key infrastructure—Digital certificate format*
- 代替GB/T 20518-2006
 
 GB/T 20520-2006 《信息安全技术 公钥基础设施 时间戳规范》
  *Information security technology - Public key infrastructure - Time stamp specification*
@@ -23,7 +22,6 @@ GB/T 21054-2007 《信息安全技术 公钥基础设施 PKI系统安全等级�
 
 GB/T 25056-2018 《信息安全技术 证书认证系统密码及其相关安全技术规范》
  *Information security technology—Specifications of cryptograph and related security technology for certificate authentication system*
- 代替GB/T 25056-2010
 
 GB/T 25061-2010 《信息安全技术 公钥基础设施 XML数字签名语法与处理规范》
  *Information security technology - Public key infrastructure - XML digital signature syntax and processing specification*
@@ -52,6 +50,33 @@ GB/T 31508-2015 《信息安全技术 公钥基础设施 数字证书策略分�
 GB/T 32213-2015 《信息安全技术 公钥基础设施 远程口令鉴别与密钥建立规范》
  *Information security technology—Public key infrastructure—Specifications for remote password authentication and key establishment*
 
+GB/T 32905-2016 《信息安全技术 SM3密码杂凑算法》
+ *Information security techniques—SM3 cryptographic hash algorithm*
+
+GB/T 32918.1-2016 《信息安全技术 SM2椭圆曲线公钥密码算法 第1部分：总则》
+ *Information security technology—Public key cryptographic algorithm SM2 based on elliptic curves—Part 1: General*
+ 
+GB/T 32918.2-2016 《信息安全技术 SM2椭圆曲线公钥密码算法 第2部分：数字签名算法》
+ *Information security technology—Public key cryptographic algorithm SM2 based on elliptic curves—Part 2: Digital signature algorithm*
+
+GB/T 32918.3-2016 《信息安全技术 SM2椭圆曲线公钥密码算法 第3部分：密钥交换协议》
+ *Information security technology—Public key cryptographic algorithm SM2 based on elliptic curves—Part 3: Key exchange protocol*
+
+GB/T 32918.4-2016 《信息安全技术 SM2椭圆曲线公钥密码算法 第4部分：公钥加密算法》
+ *Information security technology—Public key cryptographic algorithm SM2 based on elliptic curves—Part 4: Public key encryption algorithm*
+
+GB/T 32918.5-2016 《信息安全技术 SM2椭圆曲线公钥密码算法 第5部分：参数定义》
+ *Information security technology—Public key cryptographic algorithm SM2 based on elliptic curves—Part 5: Parameter definition*
+
+GB/T 33560-2017 《信息安全技术 密码应用标识规范》
+ *Information security technology—Cryptographic application identifier criterion specification*
+
+GB/T 35275-2017 《信息安全技术 SM2密码算法加密签名消息语法规范》
+ *Information security technology—SM2 cryptographic algorithm encrypted signature message syntax specification*
+
+GB/T 35276-2017 《信息安全技术 SM2密码算法使用规范》
+ *Information security technology—SM2 cryptographic algorithm usage specification*
+
 GB/T 35285-2017 《信息安全技术 公钥基础设施 基于数字证书的可靠电子签名生成及验证技术要求》
  *Information security technology—Public key infrastructure—Technical requirements for digital certificate based reliable electronic signature creation and verification*
 
@@ -73,6 +98,10 @@ RFC5967 The application/pkcs10 Media Type
 ## IANA
 
 https://www.iana.org/assignments/media-types
+
+# RSA Laboratories
+
+PKCS ＃6 扩展证书语法 PKCS #6: Extended-Certificate Syntax. Version 1.5, November 1993.
 
 ## 参考网站
 
