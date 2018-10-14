@@ -40,7 +40,6 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +93,7 @@ public class CertUtil {
         return null;
     }
 
-    private static String defaultSigAlg(PrivateKey privateKey) {
+    public static String defaultSigAlg(PrivateKey privateKey) {
         String keyAlg = privateKey.getAlgorithm();
         String algName = findAlgName(keyAlg);
         String sigAlg = signAlgMap.get(algName);

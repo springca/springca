@@ -21,6 +21,7 @@ subprojects {
 
     ext {
         spockVersion = '1.1-groovy-2.4'
+        javaHome = null
     }
 
     sourceCompatibility = 1.8

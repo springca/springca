@@ -1,8 +1,8 @@
-package com.wxmlabs.gm;
+package com.wxmlabs.cert;
 
 /**
  * GB/T 33560-2017 《信息安全技术 密码应用标识规范》
- * <i>Information security technology—Cryptographic application identifier criterion specification*</i>
+ * <i>Information security technology—Cryptographic application identifier criterion specification</i>
  */
 public abstract class SGD {
     // Symmetric 分组密码算法标识

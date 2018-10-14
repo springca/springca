@@ -45,6 +45,7 @@ public class SpringCA {
 
     /**
      * @param csr Base64 encoded PKCS10
+     * @param skipVerify disable signature check
      * @return Base64 encoded X.509 Certificate
      */
     public X509Certificate enrollCert(String csr, boolean skipVerify) {

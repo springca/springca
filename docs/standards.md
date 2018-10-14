@@ -32,6 +32,9 @@ GB/T 25064-2010 《信息安全技术 公钥基础设施 电子签名格式规�
 GB/T 25065-2010 《信息安全技术 公钥基础设施 签名生成应用程序的安全要求》
  *Information security technology - Public key infrastructure - Security requirements for signature creation applications*
 
+GB/T 26231-2017 《信息技术 开放系统互连 对象标识符（OID）的国家编号体系和操作规程》
+ *Information technology—Open systems interconnection—National numbering system and operation code for object identifier(OID)*
+
 GB/T 26855-2011 《信息安全技术 公钥基础设施 证书策略与认证业务声明框架》
  *Information security technology - Public key infrastructure - Certificate policy and certification practice statement framework*
 
@@ -55,7 +58,7 @@ GB/T 32905-2016 《信息安全技术 SM3密码杂凑算法》
 
 GB/T 32918.1-2016 《信息安全技术 SM2椭圆曲线公钥密码算法 第1部分：总则》
  *Information security technology—Public key cryptographic algorithm SM2 based on elliptic curves—Part 1: General*
- 
+
 GB/T 32918.2-2016 《信息安全技术 SM2椭圆曲线公钥密码算法 第2部分：数字签名算法》
  *Information security technology—Public key cryptographic algorithm SM2 based on elliptic curves—Part 2: Digital signature algorithm*
 
