@@ -1,0 +1,50 @@
+<!-- GB/T 20518-2018 《信息安全技术 公钥基础设施 数字证书格式》 -->
+<Certificate>
+    <TBSCertificate>
+        <!-- 版本号（本标准使用V3版本，固定值2） -->
+        <version>2</version>
+        <!-- 证书序列号 -->
+        <serialNumber/>
+        <!-- 签名算法 -->
+        <signature/>
+        <!-- 颁发者 -->
+        <issuer/>
+        <!-- 有效期 -->
+        <validity>
+            <!-- 开始时间 -->
+            <notBefore/>
+            <!-- 终止时间 -->
+            <notAfter/>
+        </validity>
+        <!-- 使用者 -->
+        <subject>
+            <!-- 国家 -->
+            <country/>
+            <!-- 省份 -->
+            <province/>
+            <!-- 地市 -->
+            <city/>
+            <!-- 组织名称 -->
+            <organization/>
+            <!-- 机构名称 -->
+            <organizationUnit/>
+            <!-- 用户名称 -->
+            <commonName/>
+        </subject>
+        <!-- 使用者公钥信息 -->
+        <subjectPublicKeyInfo/>
+        <!-- 证书扩展项 -->
+        <extensions>
+            <!-- 颁发者密钥标识符 -->
+            <authorityKeyIdentifier critical="false"/>
+            <!-- 使用者密钥标识符 -->
+            <subjectKeyIdentifier critical="false"/>
+            <!-- CRL分发点 -->
+            <cRLDistributionPoints critical="false"/>
+        </extensions>
+    </TBSCertificate>
+    <!-- 颁发签名算法 -->
+    <signatureAlgorithm/>
+    <!-- 颁发者签名 -->
+    <signatureValue/>
+</Certificate>

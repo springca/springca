@@ -1,0 +1,83 @@
+<!-- GB/T 20518-2018 《信息安全技术 公钥基础设施 数字证书格式》 -->
+<Certificate>
+    <TBSCertificate>
+        <!-- 版本号（本标准使用V3版本，固定值2） -->
+        <version>2</version>
+        <!-- 证书序列号（唯一正整数，参考5.2.3.2） -->
+        <serialNumber/>
+        <!-- 证书签名算法 -->
+        <signature/>
+        <!-- 颁发者 -->
+        <issuer/>
+        <!-- 有效期 -->
+        <validity>
+            <!-- 开始时间 -->
+            <notBefore/>
+            <!-- 终止时间 -->
+            <notAfter/>
+        </validity>
+        <!-- 使用者（参考5.2.3.4） -->
+        <subject/>
+        <!-- 使用者公钥信息 -->
+        <subjectPublicKeyInfo/>
+        <!-- 颁发者唯一标识（本标准中不使用） -->
+        <issuerUniqueID/>
+        <!-- 使用者唯一标识（本标准中不使用） -->
+        <subjectUniqueID/>
+        <!-- 证书扩展项 -->
+        <extensions>
+            <!-- 颁发者密钥标识符 -->
+            <authorityKeyIdentifier critical="false"/>
+            <!-- 使用者密钥标识符 -->
+            <subjectKeyIdentifier critical="false"/>
+            <!-- 证书密钥用法（双证书标记为关键，单证书标记为非关键） -->
+            <keyUsage critical="false"/>
+            <!-- 扩展密钥用途（如果密钥用法只限于所指的用途时标记为关键，否则标记为非关键） -->
+            <extKeyUsage critical="false"/>
+            <!-- 使用者私钥使用期 -->
+            <privateKeyUsagePeriod critical="false"/>
+            <!-- 证书策略 -->
+            <certificatePolicies critical="false"/>
+            <!-- 策略映射（如果证书用户需要正确的解释CA的发布设定的规则时标识为关键，否则标识为非关键） -->
+            <policyMappings critical="false"/>
+            <!-- 使用者别名 -->
+            <subjectAlgName critical="false"/>
+            <!-- 颁发者别名 -->
+            <issuerAltName critical="false"/>
+            <!-- 主体目录属性 -->
+            <subjectDirectoryAttributes critical="false"/>
+            <!-- 证书基本限制（CA证书标记为关键，终端实体证书标记为非关键） -->
+            <basicConstraints critical="false"/>
+            <!-- 名称限制（如果证书用户系统应检验所处理的认证路径与此扩展中的值是否一致时标记为关键，否则标记为非关键） -->
+            <nameConstraints critical="false"/>
+            <!-- 策略限制（如果证书用户需要正确的解释认证机构CA设定的规则时标识为关键，否则标识为非关键） -->
+            <policyConstraints critical="false"/>
+            <!-- CRL分发点 -->
+            <cRLDistributionPoints critical="false"/>
+            <!-- 限制所有策略（如果证书用户需要正确的解释认证机构CA设定的规则时标识为关键，否则标识为非关键） -->
+            <inhibitAnyPolicy critical="false"/>
+            <!-- 最新的CRL -->
+            <freshestCRL critical="false"/>
+            <!-- 私有的Internet扩展 -->
+            <id_pkix critical="false"/>
+            <!-- 颁发机构信息访问 -->
+            <authorityInfoAccess critical="false"/>
+            <!-- 主体信息访问 -->
+            <subjectInformationAccess critical="false"/>
+            <!-- 个人身份证号码 -->
+            <identifyCardNumber critical="false"/>
+            <!-- 个人社会保险号 -->
+            <inuranceNumber critical="false"/>
+            <!-- 企业工商注册号 -->
+            <iCRegistrationNumber critical="false"/>
+            <!-- 企业组织机构代码 -->
+            <organizationCode critical="false"/>
+            <!-- 企业税号 -->
+            <taxationNumber critical="false"/>
+        </extensions>
+    </TBSCertificate>
+    <!-- 颁发签名算法 -->
+    <signatureAlgorithm/>
+    <!-- 颁发者签名 -->
+    <signatureValue/>
+</Certificate>
