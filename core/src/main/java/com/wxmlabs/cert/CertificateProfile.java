@@ -36,15 +36,22 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * 参考文档：
- * GB/T 20518-2018 《信息安全技术 公钥基础设施 数字证书格式》
- * <i>Information security technology—Public key infrastructure—Digital certificate format</i>
- * <p>
- * 附录B、附录C
- * <p>
+ * 用于解析规则文件certficate-profile.xml
+ *
+ * 参考标准 RFC 5280
+ * 参考标准 GB/T 20518
+ *
+ * profile文件表述了一个证书的签发条件。
+ * 默认为必选项，即该项必须存在，且按满足其规则要求；
+ * "DISABLED"项为禁用项，所含项禁止使用；
+ * "OPTIONAL"为可选项，但"OPTIONAL"项存在时，其内部结构必须满足其规则定义；
+ * 未在profile中声明的项不做规则检查。
+ *
+ * 后续考虑支持各种条件规则。
+ *
  * 王翾旻 2018年10月14日
  */
-public class BG20518CertificateProfile {
+public class CertificateProfile {
     /**
      * 版本号
      * 无需赋值。要求使用第三版本，固定值2。
@@ -187,7 +194,7 @@ public class BG20518CertificateProfile {
         return serialNumber;
     }
 
-    public BG20518CertificateProfile setSerialNumber(BigInteger serialNumber) {
+    public CertificateProfile setSerialNumber(BigInteger serialNumber) {
         checkSerialNumber(serialNumber);
         this.serialNumber = serialNumber;
         return this;
@@ -209,7 +216,7 @@ public class BG20518CertificateProfile {
      *
      * @return
      */
-    public BG20518CertificateProfile setSelfSignIssuer(PrivateKey issuerKey) {
+    public CertificateProfile setSelfSignIssuer(PrivateKey issuerKey) {
         try {
             setIssuer(null, issuerKey);
         } catch (CertificateEncodingException ignore) {
@@ -217,7 +224,7 @@ public class BG20518CertificateProfile {
         return this;
     }
 
-    public BG20518CertificateProfile setIssuer(X509Certificate issuerCert, PrivateKey issuerKey) throws CertificateEncodingException {
+    public CertificateProfile setIssuer(X509Certificate issuerCert, PrivateKey issuerKey) throws CertificateEncodingException {
         if (issuerCert == null) {
             this.selfSign = true;
             this.issuer = this.subject;
@@ -243,7 +250,7 @@ public class BG20518CertificateProfile {
         return notAfter;
     }
 
-    public BG20518CertificateProfile setValidity(Date notBefore, Date notAfter) {
+    public CertificateProfile setValidity(Date notBefore, Date notAfter) {
         checkValidity(notBefore, notAfter);
         this.notBefore = notBefore;
         this.notAfter = notAfter;
@@ -254,14 +261,14 @@ public class BG20518CertificateProfile {
         return subject;
     }
 
-    public BG20518CertificateProfile setSubject(X500Principal subject, PublicKey publicKey) {
+    public CertificateProfile setSubject(X500Principal subject, PublicKey publicKey) {
         this.subject = subject;
         this.publicKey = publicKey;
         this.subjectKeyIdentifier = extensionUtils.createSubjectKeyIdentifier(publicKey);
         return this;
     }
 
-    public BG20518CertificateProfile setSubject(String country, String province, String city, String organization, String orgUnit, String commonName, PublicKey publicKey) {
+    public CertificateProfile setSubject(String country, String province, String city, String organization, String orgUnit, String commonName, PublicKey publicKey) {
         String subjectName = String.format("CN=%s, OU=%s, O=%s, C=%s", commonName, orgUnit, organization, country);
         setSubject(new X500Principal(subjectName), publicKey);
         return this;
@@ -296,7 +303,7 @@ public class BG20518CertificateProfile {
     public static final int encipherOnly = (1 << 0);
     public static final int decipherOnly = (1 << 15);
 
-    public BG20518CertificateProfile setKeyUsage(int keyUsage) {
+    public CertificateProfile setKeyUsage(int keyUsage) {
         this.keyUsage = new KeyUsage(keyUsage);
         return this;
     }
@@ -305,7 +312,7 @@ public class BG20518CertificateProfile {
         return extKeyUsage;
     }
 
-    public BG20518CertificateProfile setExtKeyUsage(Collection<String> keyPurposeIds) {
+    public CertificateProfile setExtKeyUsage(Collection<String> keyPurposeIds) {
         if (keyPurposeIds != null) {
             KeyPurposeId[] extKeyUsage = new KeyPurposeId[keyPurposeIds.size()];
             int i = 0;
@@ -322,7 +329,7 @@ public class BG20518CertificateProfile {
     }
 
     // TODO 分割线，从这里继续
-    public BG20518CertificateProfile setPrivateKeyUsagePeriod(PrivateKeyUsagePeriod privateKeyUsagePeriod) {
+    public CertificateProfile setPrivateKeyUsagePeriod(PrivateKeyUsagePeriod privateKeyUsagePeriod) {
         this.privateKeyUsagePeriod = privateKeyUsagePeriod;
         return this;
     }
@@ -331,7 +338,7 @@ public class BG20518CertificateProfile {
         return certificatePolicies;
     }
 
-    public BG20518CertificateProfile setCertificatePolicies(CertificatePolicies certificatePolicies) {
+    public CertificateProfile setCertificatePolicies(CertificatePolicies certificatePolicies) {
         this.certificatePolicies = certificatePolicies;
         return this;
     }
@@ -340,7 +347,7 @@ public class BG20518CertificateProfile {
         return policyMappings;
     }
 
-    public BG20518CertificateProfile setPolicyMappings(PolicyMappings policyMappings) {
+    public CertificateProfile setPolicyMappings(PolicyMappings policyMappings) {
         this.policyMappings = policyMappings;
         return this;
     }
@@ -349,7 +356,7 @@ public class BG20518CertificateProfile {
         return subjectAlgName;
     }
 
-    public BG20518CertificateProfile setSubjectAlgName(Extension subjectAlgName) {
+    public CertificateProfile setSubjectAlgName(Extension subjectAlgName) {
         this.subjectAlgName = subjectAlgName;
         return this;
     }
@@ -358,7 +365,7 @@ public class BG20518CertificateProfile {
         return issuerAltName;
     }
 
-    public BG20518CertificateProfile setIssuerAltName(Extension issuerAltName) {
+    public CertificateProfile setIssuerAltName(Extension issuerAltName) {
         this.issuerAltName = issuerAltName;
         return this;
     }
@@ -367,7 +374,7 @@ public class BG20518CertificateProfile {
         return subjectDirectoryAttributes;
     }
 
-    public BG20518CertificateProfile setSubjectDirectoryAttributes(SubjectDirectoryAttributes subjectDirectoryAttributes) {
+    public CertificateProfile setSubjectDirectoryAttributes(SubjectDirectoryAttributes subjectDirectoryAttributes) {
         this.subjectDirectoryAttributes = subjectDirectoryAttributes;
         return this;
     }
@@ -376,7 +383,7 @@ public class BG20518CertificateProfile {
         return basicConstraints;
     }
 
-    public BG20518CertificateProfile setBasicConstraints(BasicConstraints basicConstraints) {
+    public CertificateProfile setBasicConstraints(BasicConstraints basicConstraints) {
         this.basicConstraints = basicConstraints;
         return this;
     }
@@ -385,7 +392,7 @@ public class BG20518CertificateProfile {
         return nameConstraints;
     }
 
-    public BG20518CertificateProfile setNameConstraints(NameConstraints nameConstraints) {
+    public CertificateProfile setNameConstraints(NameConstraints nameConstraints) {
         this.nameConstraints = nameConstraints;
         return this;
     }
@@ -394,7 +401,7 @@ public class BG20518CertificateProfile {
         return policyConstraints;
     }
 
-    public BG20518CertificateProfile setPolicyConstraints(PolicyConstraints policyConstraints) {
+    public CertificateProfile setPolicyConstraints(PolicyConstraints policyConstraints) {
         this.policyConstraints = policyConstraints;
         return this;
     }
@@ -403,7 +410,7 @@ public class BG20518CertificateProfile {
         return cRLDistributionPoints;
     }
 
-    public BG20518CertificateProfile setcRLDistributionPoints(CRLDistPoint cRLDistributionPoints) {
+    public CertificateProfile setcRLDistributionPoints(CRLDistPoint cRLDistributionPoints) {
         this.cRLDistributionPoints = cRLDistributionPoints;
         return this;
     }
@@ -412,7 +419,7 @@ public class BG20518CertificateProfile {
         return inhibitAnyPolicy;
     }
 
-    public BG20518CertificateProfile setInhibitAnyPolicy(Extension inhibitAnyPolicy) {
+    public CertificateProfile setInhibitAnyPolicy(Extension inhibitAnyPolicy) {
         this.inhibitAnyPolicy = inhibitAnyPolicy;
         return this;
     }
@@ -421,7 +428,7 @@ public class BG20518CertificateProfile {
         return freshestCRL;
     }
 
-    public BG20518CertificateProfile setFreshestCRL(Extension freshestCRL) {
+    public CertificateProfile setFreshestCRL(Extension freshestCRL) {
         this.freshestCRL = freshestCRL;
         return this;
     }
@@ -430,7 +437,7 @@ public class BG20518CertificateProfile {
         return id_pkix;
     }
 
-    public BG20518CertificateProfile setId_pkix(Extension id_pkix) {
+    public CertificateProfile setId_pkix(Extension id_pkix) {
         this.id_pkix = id_pkix;
         return this;
     }
@@ -439,7 +446,7 @@ public class BG20518CertificateProfile {
         return authorityInfoAccess;
     }
 
-    public BG20518CertificateProfile setAuthorityInfoAccess(AuthorityInformationAccess authorityInfoAccess) {
+    public CertificateProfile setAuthorityInfoAccess(AuthorityInformationAccess authorityInfoAccess) {
         this.authorityInfoAccess = authorityInfoAccess;
         return this;
     }
@@ -448,7 +455,7 @@ public class BG20518CertificateProfile {
         return subjectInformationAccess;
     }
 
-    public BG20518CertificateProfile setSubjectInformationAccess(Extension subjectInformationAccess) {
+    public CertificateProfile setSubjectInformationAccess(Extension subjectInformationAccess) {
         this.subjectInformationAccess = subjectInformationAccess;
         return this;
     }
@@ -457,7 +464,7 @@ public class BG20518CertificateProfile {
         return identifyCardNumber;
     }
 
-    public BG20518CertificateProfile setIdentifyCardNumber(Extension identifyCardNumber) {
+    public CertificateProfile setIdentifyCardNumber(Extension identifyCardNumber) {
         this.identifyCardNumber = identifyCardNumber;
         return this;
     }
@@ -466,7 +473,7 @@ public class BG20518CertificateProfile {
         return inuranceNumber;
     }
 
-    public BG20518CertificateProfile setInuranceNumber(Extension inuranceNumber) {
+    public CertificateProfile setInuranceNumber(Extension inuranceNumber) {
         this.inuranceNumber = inuranceNumber;
         return this;
     }
@@ -475,7 +482,7 @@ public class BG20518CertificateProfile {
         return iCRegistrationNumber;
     }
 
-    public BG20518CertificateProfile setiCRegistrationNumber(Extension iCRegistrationNumber) {
+    public CertificateProfile setiCRegistrationNumber(Extension iCRegistrationNumber) {
         this.iCRegistrationNumber = iCRegistrationNumber;
         return this;
     }
@@ -484,7 +491,7 @@ public class BG20518CertificateProfile {
         return organizationCode;
     }
 
-    public BG20518CertificateProfile setOrganizationCode(Extension organizationCode) {
+    public CertificateProfile setOrganizationCode(Extension organizationCode) {
         this.organizationCode = organizationCode;
         return this;
     }
@@ -493,7 +500,7 @@ public class BG20518CertificateProfile {
         return taxationNumber;
     }
 
-    public BG20518CertificateProfile setTaxationNumber(Extension taxationNumber) {
+    public CertificateProfile setTaxationNumber(Extension taxationNumber) {
         this.taxationNumber = taxationNumber;
         return this;
     }

@@ -1,0 +1,24 @@
+<crl>
+    <tbsCertList>
+        <version>1</version>
+        <signature/>
+        <issuer/>
+        <thisUpdate/>
+        <nextUpdate/>
+        <revokedCertificates>
+            <SEQUENCE>
+                <userCertificate/>
+                <revocationDate/>
+                <crlEntryExtensions OPTIONAL="true"/>
+            </SEQUENCE>
+        </revokedCertificates>
+        <crlExtensions>
+            <!-- 颁发者密钥标识符 -->
+            <authorityKeyIdentifier/>
+            <!-- 使用者密钥标识符 -->
+            <subjectKeyIdentifier/>
+        </crlExtensions>
+    </tbsCertList>
+    <signatureAlgorithm/>
+    <signatureValue/>
+</crl>

@@ -1,0 +1,72 @@
+<!-- GB/T 20518-2018 《信息安全技术 公钥基础设施 数字证书格式》 C1 -->
+<certificate>
+    <tbsCertificate>
+        <!-- 版本号（本标准使用V3版本，值为2） -->
+        <version>2</version>
+        <!-- 证书序列号 -->
+        <serialNumber/>
+        <!-- 证书签名算法（应与signatureAlgorithm匹配） -->
+        <signature condition="SHA1withRSA|SHA256withRSA|SM3withSM2"/>
+        <!-- 颁发者（应与subject一致） -->
+        <issuer condition="eq subject"/>
+        <!-- 有效期 -->
+        <validity/>
+        <!-- 使用者 -->
+        <subject>
+            <!-- 国家 -->
+            <country/>
+            <!-- 省份 -->
+            <province/>
+            <!-- 地市 -->
+            <city/>
+            <!-- 组织名称 -->
+            <organization/>
+            <!-- 机构名称 -->
+            <organizationUnit/>
+            <!-- 服务器名称 -->
+            <commonName/>
+        </subject>
+        <!-- 使用者公钥信息 -->
+        <subjectPublicKeyInfo>
+            <!-- RSA或SM2 -->
+            <algorithm/>
+            <!-- RSA模长至少2048位，SM2密钥长度至少256位 -->
+            <subjectPublicKey/>
+        </subjectPublicKeyInfo>
+        <!-- 证书扩展项 -->
+        <extensions>
+            <!-- 使用者密钥标识符 -->
+            <subjectKeyIdentifier/>
+            <!-- 证书密钥用法（双证书标记为关键，单证书标记为非关键） -->
+            <keyUsage critical="true">
+                <keyCertSign/>
+                <crlSign/>
+            </keyUsage>
+            <!-- 颁发者别名 -->
+            <issuerAltName optional="true">
+                <GeneralName>
+                    <!-- PKI管理机构的电子邮箱地址 -->
+                    <rfc882Name/>
+                </GeneralName>
+            </issuerAltName>
+            <!-- 证书基本限制（CA证书标记为关键，终端实体证书标记为非关键） -->
+            <basicConstraints critical="true">
+                <CA>true</CA>
+            </basicConstraints>
+            <!-- CRL分发点 -->
+            <cRLDistributionPoints/>
+            <!-- 主体信息访问 -->
+            <subjectInfoAccess>
+                <AccessDescription>
+                    <accessMethod>caRepository</accessMethod>
+                    <!-- 采用"ldap://"或者"http://"形式 -->
+                    <accessLocation/>
+                </AccessDescription>
+            </subjectInfoAccess>
+        </extensions>
+    </tbsCertificate>
+    <!-- 颁发签名算法 -->
+    <signatureAlgorithm/>
+    <!-- 颁发者签名 -->
+    <signatureValue/>
+</certificate>

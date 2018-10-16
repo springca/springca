@@ -1,6 +1,7 @@
 <!-- GB/T 20518-2018 《信息安全技术 公钥基础设施 数字证书格式》 -->
-<Certificate>
-    <TBSCertificate>
+<!-- RFC 5280 Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile -->
+<certificate>
+    <tbsCertificate>
         <!-- 版本号（本标准使用V3版本，固定值2） -->
         <version>2</version>
         <!-- 证书序列号（唯一正整数，参考5.2.3.2） -->
@@ -10,12 +11,7 @@
         <!-- 颁发者 -->
         <issuer/>
         <!-- 有效期 -->
-        <validity>
-            <!-- 开始时间 -->
-            <notBefore/>
-            <!-- 终止时间 -->
-            <notAfter/>
-        </validity>
+        <validity/>
         <!-- 使用者（参考5.2.3.4） -->
         <subject/>
         <!-- 使用者公钥信息 -->
@@ -27,57 +23,74 @@
         <!-- 证书扩展项 -->
         <extensions>
             <!-- 颁发者密钥标识符 -->
-            <authorityKeyIdentifier critical="false"/>
+            <authorityKeyIdentifier/>
             <!-- 使用者密钥标识符 -->
-            <subjectKeyIdentifier critical="false"/>
+            <subjectKeyIdentifier/>
             <!-- 证书密钥用法（双证书标记为关键，单证书标记为非关键） -->
-            <keyUsage critical="false"/>
-            <!-- 扩展密钥用途（如果密钥用法只限于所指的用途时标记为关键，否则标记为非关键） -->
-            <extKeyUsage critical="false"/>
-            <!-- 使用者私钥使用期 -->
-            <privateKeyUsagePeriod critical="false"/>
+            <keyUsage>
+                <digitalSignature/>
+                <!-- recent editions of X.509 have renamed nonRepudiation bit to contentCommitment -->
+                <nonRepudiation/>
+                <keyEncipherment/>
+                <dataEncipherment/>
+                <keyAgreement/>
+                <keyCertSign/>
+                <cRLSign/>
+                <encipherOnly/>
+                <decipherOnly/>
+            </keyUsage>
             <!-- 证书策略 -->
-            <certificatePolicies critical="false"/>
+            <certificatePolicies/>
             <!-- 策略映射（如果证书用户需要正确的解释CA的发布设定的规则时标识为关键，否则标识为非关键） -->
-            <policyMappings critical="false"/>
+            <policyMappings/>
             <!-- 使用者别名 -->
-            <subjectAlgName critical="false"/>
+            <subjectAltName/>
             <!-- 颁发者别名 -->
-            <issuerAltName critical="false"/>
+            <issuerAltName/>
             <!-- 主体目录属性 -->
-            <subjectDirectoryAttributes critical="false"/>
+            <subjectDirectoryAttributes/>
             <!-- 证书基本限制（CA证书标记为关键，终端实体证书标记为非关键） -->
-            <basicConstraints critical="false"/>
+            <basicConstraints/>
             <!-- 名称限制（如果证书用户系统应检验所处理的认证路径与此扩展中的值是否一致时标记为关键，否则标记为非关键） -->
-            <nameConstraints critical="false"/>
+            <nameConstraints/>
             <!-- 策略限制（如果证书用户需要正确的解释认证机构CA设定的规则时标识为关键，否则标识为非关键） -->
-            <policyConstraints critical="false"/>
+            <policyConstraints/>
+            <!-- 扩展密钥用途（如果密钥用法只限于所指的用途时标记为关键，否则标记为非关键） -->
+            <extKeyUsage>
+                <anyExtendedKeyUsage/>
+                <serverAuth/>
+                <clientAuth/>
+                <codeSigning/>
+                <emailProtection/>
+                <timeStamping/>
+                <OCSPSigning/>
+            </extKeyUsage>
             <!-- CRL分发点 -->
-            <cRLDistributionPoints critical="false"/>
+            <cRLDistributionPoints/>
             <!-- 限制所有策略（如果证书用户需要正确的解释认证机构CA设定的规则时标识为关键，否则标识为非关键） -->
-            <inhibitAnyPolicy critical="false"/>
+            <inhibitAnyPolicy/>
             <!-- 最新的CRL -->
-            <freshestCRL critical="false"/>
-            <!-- 私有的Internet扩展 -->
-            <id_pkix critical="false"/>
+            <freshestCRL/>
             <!-- 颁发机构信息访问 -->
-            <authorityInfoAccess critical="false"/>
+            <authorityInfoAccess/>
             <!-- 主体信息访问 -->
-            <subjectInformationAccess critical="false"/>
+            <subjectInfoAccess/>
+            <!-- 使用者私钥使用期 -->
+            <privateKeyUsagePeriod/>
             <!-- 个人身份证号码 -->
-            <identifyCardNumber critical="false"/>
+            <identifyCardNumber/>
             <!-- 个人社会保险号 -->
-            <inuranceNumber critical="false"/>
+            <inuranceNumber/>
             <!-- 企业工商注册号 -->
-            <iCRegistrationNumber critical="false"/>
+            <iCRegistrationNumber/>
             <!-- 企业组织机构代码 -->
-            <organizationCode critical="false"/>
+            <organizationCode/>
             <!-- 企业税号 -->
-            <taxationNumber critical="false"/>
+            <taxationNumber/>
         </extensions>
-    </TBSCertificate>
+    </tbsCertificate>
     <!-- 颁发签名算法 -->
     <signatureAlgorithm/>
     <!-- 颁发者签名 -->
     <signatureValue/>
-</Certificate>
+</certificate>
