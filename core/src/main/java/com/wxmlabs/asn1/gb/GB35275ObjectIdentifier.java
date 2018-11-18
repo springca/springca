@@ -1,4 +1,6 @@
-package com.wxmlabs.oid;
+package com.wxmlabs.asn1.gb;
+
+import com.wxmlabs.asn1.ObjectIdentifier;
 
 /**
  * GB/T 35275-2017 《信息安全技术 SM2密码算法加密签名消息语法规范》

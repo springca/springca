@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2000-2018 The Legion of the Bouncy Castle Inc. (http://www.bouncycastle.org)
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  * <p>
@@ -6,12 +6,15 @@
  * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.wxmlabs.oid;
+package com.wxmlabs.asn1.pkcs;
+
+import com.wxmlabs.asn1.ObjectIdentifier;
 
 /**
  * pkcs-1 OBJECT IDENTIFIER ::=<p>
  * { iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) 1 }
  */
+@SuppressWarnings("unused")
 public interface PKCSObjectIdentifiers {
     /**
      * PKCS#1: 1.2.840.113549.1.1
@@ -612,7 +615,7 @@ public interface PKCSObjectIdentifiers {
      * rsadsi(113549) pkcs(1) pkcs-9(9) smime(16) id-spq(5)}; <p>
      * 1.2.840.113549.1.9.16.5
      */
-    final String id_spq = "1.2.840.113549.1.9.16.5";
+    String id_spq = "1.2.840.113549.1.9.16.5";
 
     /**
      * SMIME SPQ URI:     1.2.840.113549.1.9.16.5.1

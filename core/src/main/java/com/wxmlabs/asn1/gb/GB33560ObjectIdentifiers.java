@@ -1,4 +1,6 @@
-package com.wxmlabs.oid;
+package com.wxmlabs.asn1.gb;
+
+import com.wxmlabs.asn1.ObjectIdentifier;
 
 /**
  * GB/T 33560-2017 《信息安全技术 密码应用标识规范》
